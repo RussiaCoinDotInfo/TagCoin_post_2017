@@ -971,6 +971,8 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
 
 static const int64 nTargetTimespan = 2 * 60 * 60;			//2 hrs
 static const int64 nTargetSpacingProofOfWork = 4 * 60;		//4 min
+static const int64 nTargetSpacingWorkMax = 3 * nTargetSpacingProofOfWork; //12 min
+
 
 //
 // maximum nBits value could possible be required nTime after
@@ -1022,12 +1024,9 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 {
 	int nHeight = pindexLast->nHeight + 1;
 	
-	if (!fProofOfStake && nHeight<390)		//initial funds for distribution and promotion, keep diff low
-		return bnProofOfWorkLimit.GetCompact();
-	
-	if (!fProofOfStake && nHeight==390)		//starting difficulty of 0.5 for PoW
-		return bnInitialProofOfWorkDifficulty.GetCompact();
-	
+//New difficulty algorithm
+if (nHeight >= 12000) 
+{
     CBigNum bnTargetLimit = !fProofOfStake ? bnProofOfWorkLimit : bnProofOfStakeLimit;
 
     if (pindexLast == NULL)
@@ -1039,28 +1038,64 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
     if (pindexPrevPrev->pprev == NULL)
         return bnTargetLimit.GetCompact(); // second block
-	
-	CBigNum bnNew;
+
+    int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+
+    // ppcoin: target change every block
+    // ppcoin: retarget with exponential moving toward target spacing
+    CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
-	
-	if (fProofOfStake)			//PoS difficulty algo. recalc every block. 
+    int64 nTargetSpacing = fProofOfStake? nStakeTargetSpacing : min(nTargetSpacingWorkMax, (int64) nStakeTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
+    int64 nInterval = nTargetTimespan / nTargetSpacing;
+    bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
+    bnNew /= ((nInterval + 1) * nTargetSpacing);
+
+    if (bnNew > bnTargetLimit)
+        bnNew = bnTargetLimit;
+
+    return bnNew.GetCompact();
+ } 
+else    //Old difficulty algorithm, prior to block 12000
+ {
+        if (!fProofOfStake && nHeight<390)                //initial funds for distribution and promotion, keep diff low
+                return bnProofOfWorkLimit.GetCompact();
+        
+        if (!fProofOfStake && nHeight==390)                //starting difficulty of 0.5 for PoW
+                return bnInitialProofOfWorkDifficulty.GetCompact();
+        
+    CBigNum bnTargetLimit = !fProofOfStake ? bnProofOfWorkLimit : bnProofOfStakeLimit;
+
+    if (pindexLast == NULL)
+        return bnTargetLimit.GetCompact(); // genesis block
+
+    const CBlockIndex* pindexPrev = GetLastBlockIndex(pindexLast, fProofOfStake);
+    if (pindexPrev->pprev == NULL)
+        return bnTargetLimit.GetCompact(); // first block
+    const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
+    if (pindexPrevPrev->pprev == NULL)
+        return bnTargetLimit.GetCompact(); // second block
+        
+        CBigNum bnNew;
+    bnNew.SetCompact(pindexPrev->nBits);
+        
+        if (fProofOfStake)                        //PoS difficulty algo. recalc every block. 
     {
-		int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
-		int64 nTargetSpacing = nStakeTargetSpacing;
-		int64 nInterval = nTargetTimespan / nTargetSpacing;
-		bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
-		bnNew /= ((nInterval + 1) * nTargetSpacing);
-	}
-	
-	if (!fProofOfStake)			//PoW difficulty algo. recalc every interval.
-{
-	int64 nInterval = nTargetTimespan / nTargetSpacingProofOfWork;
-	
+                int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+                int64 nTargetSpacing = nStakeTargetSpacing;
+                int64 nInterval = nTargetTimespan / nTargetSpacing;
+                bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
+                bnNew /= ((nInterval + 1) * nTargetSpacing);
+        }
+        
+        if (!fProofOfStake)                        //PoW difficulty algo. recalc every interval.
+	{
+        int64 nInterval = nTargetTimespan / nTargetSpacingProofOfWork;
+        
     // Only change once per interval
     if ((nHeight) % nInterval != 0)
-		return pindexLast->nBits;
-		
-	// This fixes an issue where a 51% attack can change difficulty at will.
+                return pindexLast->nBits;
+                
+        // This fixes an issue where a 51% attack can change difficulty at will.
     // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
     int blockstogoback = nInterval-1;
     if ((nHeight) != nInterval)
@@ -1071,27 +1106,28 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     for (int i = 0; pindexFirst && i < blockstogoback; i++)
         pindexFirst = pindexFirst->pprev;
     assert(pindexFirst);
-	
-	// Limit adjustment step
+        
+        // Limit adjustment step
     int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
     printf(" nActualTimespan = %"PRI64d" before bounds\n", nActualTimespan);
-	
+        
     int64 nActualTimespanMax = nTargetTimespan * 1.25;
     int64 nActualTimespanMin = nTargetTimespan * 0.75;
-	
-	if (nActualTimespan < nActualTimespanMin)
+        
+        if (nActualTimespan < nActualTimespanMin)
         nActualTimespan = nActualTimespanMin;
     if (nActualTimespan > nActualTimespanMax)
         nActualTimespan = nActualTimespanMax;
-		
+                
     bnNew *= nActualTimespan;
     bnNew /= nTargetTimespan;
-}
+	}
 
     if (bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
 
     return bnNew.GetCompact();
+ }
 }
 
 

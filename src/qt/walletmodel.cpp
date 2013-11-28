@@ -139,6 +139,9 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
     {
         return OK;
     }
+	
+	int64 CENT = 10000;
+	int64 MIN_TX_FEE = 0.1 * CENT;
 
     // Pre-check input data for validity
     foreach(const SendCoinsRecipient &rcp, recipients)
@@ -149,7 +152,7 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
         }
         setAddress.insert(rcp.address);
 
-        if(rcp.amount <= 0)
+        if(rcp.amount <= MIN_TX_FEE)
         {
             return InvalidAmount;
         }
