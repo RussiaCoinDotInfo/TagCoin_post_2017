@@ -37,6 +37,8 @@ uint256 hashGenesisBlock = hashGenesisBlockOfficial;
 //starting difficulty of .5 for PoW
 static CBigNum bnInitialProofOfWorkDifficulty(~uint256(0) >> 31);
 
+uint256 nPoWBase = uint256("0x00000000ffff0000000000000000000000000000000000000000000000000000"); // difficulty-1 target
+
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimit(~uint256(0) >> 24);
 
@@ -947,8 +949,10 @@ int64 GetProofOfWorkReward(unsigned int nBits, int nHeight)
 			nSubsidy = 30 * COIN;								//initial funds for distribution and promotion
 	    else if(nHeight < 390)   
 			nSubsidy = 0.01 * COIN;								//small buffer zone until coin launches with proper difficulty
+		else if(nHeight < 41000)
+			nSubsidy = (30 - (.3*(nHeight/32850)) ) * COIN;  	
 		else
-			nSubsidy = (30 - (.3*(nHeight/32850)) ) * COIN;  	//Subsidy decreases 1% every 3 months
+			nSubsidy = (30.0 - (0.03*(nHeight/3285.0)) ) * COIN;  	//Subsidy decreases 1% every 3 months
 		
 		//minimum PoW reward
 		if(nSubsidy < 3)
@@ -960,8 +964,12 @@ int64 GetProofOfWorkReward(unsigned int nBits, int nHeight)
 // miner's coin stake reward
 int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime)
 {
-	//fixed 1.5% mint rate
     int64 nRewardCoinYear = 0.015 * CENT;
+	
+	// fixed 1.5% mint rate
+	if(nTime > FIX_SWITCH_TIME)
+		nRewardCoinYear = 1.5 * CENT;
+	
 	int64 nSubsidy = nCoinAge * nRewardCoinYear * 33 / (365 * 33 + 8);
 
     if (fDebug && GetBoolArg("-printcreation"))
@@ -2241,6 +2249,9 @@ CBigNum CBlockIndex::GetBlockTrust() const
     if (bnTarget <= 0)
         return 0;
 
+   /* Old protocol */
+if (GetBlockTime() < FIX_SWITCH_TIME)
+ {	
     if (IsProofOfStake())
     {
         // Return trust score as usual
@@ -2252,6 +2263,75 @@ CBigNum CBlockIndex::GetBlockTrust() const
         CBigNum bnPoWTrust = (bnProofOfWorkLimit / (bnTarget+1));
         return bnPoWTrust > 1 ? bnPoWTrust : 1;
     }
+ }
+ 
+    /* New protocol */
+ 
+    // Calculate work amount for block
+    CBigNum nPoWTrust = (CBigNum(nPoWBase) / (bnTarget+1));
+
+    // Set nPowTrust to 1 if we are checking PoS block or PoW difficulty is too low
+    nPoWTrust = (IsProofOfStake() || nPoWTrust < 1) ? 1 : nPoWTrust;
+
+    const CBlockIndex* currentIndex = pprev;
+
+    if(IsProofOfStake())
+    {
+        CBigNum bnNewTrust = (CBigNum(1)<<256) / (bnTarget+1);
+
+        // Return 1/3 of score if parent block is not the PoW block
+        if (!pprev->IsProofOfWork())
+            return (bnNewTrust / 3);
+
+        int nPoWCount = 0;
+
+        // Check last 12 blocks type
+        while (pprev->nHeight - currentIndex->nHeight < 12)
+        {
+            if (currentIndex->IsProofOfWork())
+                nPoWCount++;
+            currentIndex = currentIndex->pprev;
+        }
+
+        // Return 1/3 of score if less than 5 PoW blocks found
+        if (nPoWCount < 5)
+            return (bnNewTrust / 3);
+
+        return bnNewTrust;
+    }
+    else
+    {
+        CBigNum bnLastBlockTrust = CBigNum(pprev->bnChainTrust - pprev->pprev->bnChainTrust);
+
+        // Return nPoWTrust + 3/4 of previous block score parent block is not PoS
+        if (!pprev->IsProofOfStake())
+            return nPoWTrust + (3 * bnLastBlockTrust / 4);
+
+        int nPoSCount = 0;
+
+        // Check last 12 blocks type
+        while (pprev->nHeight - currentIndex->nHeight < 12)
+        {
+            if (currentIndex->IsProofOfStake())
+                nPoSCount++;
+            currentIndex = currentIndex->pprev;
+        }
+
+        // Return nPoWTrust + 3/4 of previous block score if less than 4 PoS blocks found
+        if (nPoSCount < 4)
+            return nPoWTrust + (3 * bnLastBlockTrust / 4);
+
+        bnTarget.SetCompact(pprev->nBits);
+
+        if (bnTarget <= 0)
+            return 0;
+
+        CBigNum bnNewTrust = (CBigNum(1)<<256) / (bnTarget+1);
+
+        // Return nPoWTrust + full trust score for previous block nBits
+        return nPoWTrust + bnNewTrust;
+    }	
+	
 }
 
 bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, unsigned int nRequired, unsigned int nToCheck)
@@ -3328,10 +3408,10 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             if (pindex->GetBlockHash() == hashStop)
             {
                 printf("  getblocks stopping at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str());
-                // ppcoin: tell downloading node about the latest block if it's
-                // without risk being rejected due to stake connection check
-                if (hashStop != hashBestChain && pindex->GetBlockTime() + nStakeMinAge > pindexBest->GetBlockTime())
-                    pfrom->PushInventory(CInv(MSG_BLOCK, hashBestChain));
+                 // ppcoin: tell downloading node about the latest block if it's
+                 // without risk being rejected due to stake connection check
+                 //if (hashStop != hashBestChain && pindex->GetBlockTime() + nStakeMinAge > pindexBest->GetBlockTime())
+                 //    pfrom->PushInventory(CInv(MSG_BLOCK, hashBestChain));
                 break;
             }
             pfrom->PushInventory(CInv(MSG_BLOCK, pindex->GetBlockHash()));
