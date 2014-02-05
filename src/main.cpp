@@ -1637,6 +1637,12 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 
         mapQueuedChanges[hashTx] = CTxIndex(posThisTx, tx.vout.size());
     }
+	
+	// Check that coinbase coin doesn't exceed what is allowable
+	if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(nBits, pindex->nHeight) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+	return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s", 
+		        FormatMoney(vtx[0].GetValueOut()).c_str(),
+		        FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits, pindex->nHeight) : 0).c_str()));
 
     // ppcoin: track money supply and mint amount info
     pindex->nMint = nValueOut - nValueIn + nFees;
@@ -2061,14 +2067,7 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
 
 
 bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
-{	
-    // Get prev block index
-    map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(hashPrevBlock);
-    if (mi == mapBlockIndex.end())
-        return DoS(10, error("AcceptBlock() : prev block not found"));
-    CBlockIndex* pindexPrev = (*mi).second;
-    int nHeight = pindexPrev->nHeight+1;
-	
+{		
     // These are checks that are independent of context
     // that can be verified before saving an orphan block.
 
@@ -2108,8 +2107,11 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
     if (IsProofOfStake() && !CheckCoinStakeTimestamp(GetBlockTime(), (int64)vtx[1].nTime))
         return DoS(50, error("CheckBlock() : coinstake timestamp violation nTimeBlock=%"PRI64d" nTimeTx=%u", GetBlockTime(), vtx[1].nTime));
 
-    // Check coinbase reward
+    // For this preliminary check, only check that the coinbase reward doesn't exceed the maximum. 
+	// Height is set to 1 so we always get maximum block reward of 30.
+	// Proper checking is done when connecting the block.
     int64 nTimeBlock = GetBlockTime();
+	int nHeight = 1;
     if (nTimeBlock < REWARD_SWITCH_TIME) {
 
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
@@ -3401,7 +3403,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         // Send the rest of the chain
         if (pindex)
             pindex = pindex->pnext;
-        int nLimit = 50000000;
+        int nLimit = 500;
         printf("getblocks %d to %s limit %d\n", (pindex ? pindex->nHeight : -1), hashStop.ToString().substr(0,20).c_str(), nLimit);
         for (; pindex; pindex = pindex->pnext)
         {
@@ -3410,8 +3412,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 printf("  getblocks stopping at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str());
                  // ppcoin: tell downloading node about the latest block if it's
                  // without risk being rejected due to stake connection check
-                 //if (hashStop != hashBestChain && pindex->GetBlockTime() + nStakeMinAge > pindexBest->GetBlockTime())
-                 //    pfrom->PushInventory(CInv(MSG_BLOCK, hashBestChain));
+                 if (hashStop != hashBestChain && pindex->GetBlockTime() + nStakeMinAge > pindexBest->GetBlockTime())
+                     pfrom->PushInventory(CInv(MSG_BLOCK, hashBestChain));
                 break;
             }
             pfrom->PushInventory(CInv(MSG_BLOCK, pindex->GetBlockHash()));
@@ -3464,7 +3466,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         }
 
         vector<CBlock> vHeaders;
-        int nLimit = 50000000;
+        int nLimit = 2000;
         printf("getheaders %d to %s\n", (pindex ? pindex->nHeight : -1), hashStop.ToString().substr(0,20).c_str());
         for (; pindex; pindex = pindex->pnext)
         {
