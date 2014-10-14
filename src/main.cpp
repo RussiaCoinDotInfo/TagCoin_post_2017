@@ -955,8 +955,8 @@ int64 GetProofOfWorkReward(unsigned int nBits, int nHeight)
 			nSubsidy = (30.0 - (0.03*(nHeight/3285.0)) ) * COIN;  	//Subsidy decreases 1% every 3 months
 		
 		//minimum PoW reward
-		if(nSubsidy < 3)
-			nSubsidy = 3;
+		if(nSubsidy < 3 * COIN)
+			nSubsidy = 3 * COIN;
 			
     return nSubsidy;
 }
@@ -969,6 +969,10 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
 	// fixed 1.5% mint rate
 	if(nTime > FIX_SWITCH_TIME)
 		nRewardCoinYear = 1.5 * CENT;
+		
+	// fixed 5% mint rate
+	if(nTime > INTEREST_INCREASE_TIME)
+		nRewardCoinYear = 5 * CENT;
 	
 	int64 nSubsidy = nCoinAge * nRewardCoinYear * 33 / (365 * 33 + 8);
 
@@ -1048,6 +1052,19 @@ if (nHeight >= 12000)
         return bnTargetLimit.GetCompact(); // second block
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+	
+	//////////// 
+	// New for version 1.1
+	
+	 // Bug fix: Negative time values
+	 if (pindexLast->nTime > INTEREST_INCREASE_TIME && nActualSpacing < 1)
+	 	nActualSpacing = 1;
+		
+	 // Maximum 2200 seconds between blocks for calculation purposes, PoW only
+	 if (pindexLast->nTime > INTEREST_INCREASE_TIME && nActualSpacing > 2200 && fProofOfStake == false)
+	 	nActualSpacing = 2200;
+	
+	////////////
 
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
