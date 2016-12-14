@@ -1,4 +1,4 @@
-IDI_ICON1 ICON DISCARDABLE "icons/TagCoin.ico"
+IDI_ICON1 ICON DISCARDABLE "icons/bitcoin.ico"
 
 #include <windows.h>             // needed for VERSIONINFO
 #include "../../clientversion.h" // holds the needed client version information
@@ -22,7 +22,7 @@ BEGIN
             VALUE "FileDescription",    "TagCoin-Qt (OSS GUI client for TagCoin)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "TagCoin-qt"
-            VALUE "LegalCopyright",     "2009-2012 The Bitcoin developers, 2012-2013 The TagCoin & PPCoin developers"
+            VALUE "LegalCopyright",     "2009-2012 The Bitcoin developers, 2012-2014 The TagCoin & PPCoin developers"
             VALUE "LegalTrademarks1",   "Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
             VALUE "OriginalFilename",   "TagCoin-qt.exe"
             VALUE "ProductName",        "TagCoin-Qt"

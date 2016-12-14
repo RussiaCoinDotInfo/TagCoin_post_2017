@@ -10,7 +10,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "%s, you must set a rpcpassword in the configuration file:\n"
 " %s\n"
 "It is recommended you use the following random password:\n"
-"rpcuser=bitcoinrpc\n"
+"rpcuser=TagCoinrpc\n"
 "rpcpassword=%s\n"
 "(you do not need to remember this password)\n"
 "If the file does not exist, create it with owner-readable-only file "
@@ -44,7 +44,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Execute command when the best block changes (%s in cmd is replaced by block "
 "hash)"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
-"Listen for JSON-RPC connections on <port> (default: 8344 or testnet: 18344)"),
+"Listen for JSON-RPC connections on <port> (default: 9624 or testnet: 18345)"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Number of seconds to keep misbehaving peers from reconnecting (default: "
 "86400)"),
@@ -88,7 +88,6 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Connect only to the specified node(s)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Connect through socks proxy"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Connect to a node to retrieve peer addresses, and disconnect"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Discover own IP address (default: 1 when listening and no -externalip)"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Don't generate coins"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Done loading"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error loading blkindex.dat"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error loading wallet.dat"),
@@ -102,7 +101,6 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Failed to listen on any port. Use -listen=0 i
 QT_TRANSLATE_NOOP("bitcoin-core", "Fee per KB to add to transactions you send"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Find peers using DNS lookup (default: 0)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Find peers using internet relay chat (default: 1)"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Generate coins"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Get help for a command"),
 QT_TRANSLATE_NOOP("bitcoin-core", "How many blocks to check at startup (default: 2500, 0 = all)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "How thorough the block verification is (0-6, default: 1)"),
@@ -116,7 +114,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount for -paytxfee=<amount>: '%s'")
 QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount for -reservebalance=<amount>"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount"),
 QT_TRANSLATE_NOOP("bitcoin-core", "List commands"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Listen for connections on <port> (default: 7777 or testnet: 17777)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Listen for connections on <port> (default: 8623 or testnet: 17778)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading addresses..."),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading block index..."),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading wallet..."),
@@ -164,8 +162,6 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Unknown network specified in -onlynet: '%s'")
 QT_TRANSLATE_NOOP("bitcoin-core", "Upgrade wallet to latest format"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Usage:"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Use OpenSSL (https) for JSON-RPC connections"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Use UPnP to map the listening port (default: 0)"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Use UPnP to map the listening port (default: 1 when listening)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Use proxy to reach tor hidden services (default: same as -proxy)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Use the test network"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Username for JSON-RPC connections"),
@@ -174,4 +170,13 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Wallet needed to be rewritten: restart TagCoi
 QT_TRANSLATE_NOOP("bitcoin-core", "Warning: Disk space is low!"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Warning: This version is obsolete, upgrade required!"),
 QT_TRANSLATE_NOOP("bitcoin-core", "wallet.dat corrupt, salvage failed"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Specify wallet file (within data directory)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Use in-memory logging for block index database (default: 1)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Find peers using DNS lookup (default: 1)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Sync checkpoints policy (default: strict)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Require a confirmations for change (default: 0)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Enforce transaction scripts to use canonical PUSH operators (default: 1)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Set the number of script verification threads (1-16, 0=auto, default: 0)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "When creating transactions, ignore inputs with value less than this (default: %s)"),
 };

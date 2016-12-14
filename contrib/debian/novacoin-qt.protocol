@@ -1,6 +1,6 @@
 [Protocol]
-exec=novacoin-qt '%u'
-protocol=novacoin
+exec=TagCoin-qt '%u'
+protocol=TagCoin
 input=none
 output=none
 helper=true

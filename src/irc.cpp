@@ -4,9 +4,10 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "irc.h"
-#include "net.h"
-#include "strlcpy.h"
 #include "base58.h"
+#include "net.h"
+
+#include <boost/algorithm/string/predicate.hpp> // for startswith() and endswith()
 
 using namespace std;
 using namespace boost;
@@ -22,7 +23,7 @@ void ThreadIRCSeed2(void* parg);
 struct ircaddr
 {
     struct in_addr ip;
-    short port;
+    unsigned short port;
 };
 #pragma pack(pop)
 
@@ -77,7 +78,7 @@ static bool Send(SOCKET hSocket, const char* pszSend)
 
 bool RecvLineIRC(SOCKET hSocket, string& strLine)
 {
-    loop
+    while (true)
     {
         bool fRet = RecvLine(hSocket, strLine);
         if (fRet)
@@ -100,7 +101,7 @@ bool RecvLineIRC(SOCKET hSocket, string& strLine)
 
 int RecvUntil(SOCKET hSocket, const char* psz1, const char* psz2=NULL, const char* psz3=NULL, const char* psz4=NULL)
 {
-    loop
+    while (true)
     {
         string strLine;
         strLine.reserve(10000);
@@ -135,7 +136,7 @@ bool Wait(int nSeconds)
 bool RecvCodeLine(SOCKET hSocket, const char* psz1, string& strRet)
 {
     strRet.clear();
-    loop
+    while (true)
     {
         string strLine;
         if (!RecvLineIRC(hSocket, strLine))
@@ -189,7 +190,9 @@ bool GetIPFromIRC(SOCKET hSocket, string strMyName, CNetAddr& ipRet)
 void ThreadIRCSeed(void* parg)
 {
     // Make this thread recognisable as the IRC seeding thread
-    RenameThread("bitcoin-ircseed");
+    RenameThread("TagCoin-ircseed");
+
+    printf("ThreadIRCSeed started\n");
 
     try
     {
@@ -217,16 +220,18 @@ void ThreadIRCSeed2(void* parg)
     if (!GetBoolArg("-irc", true))
         return;
 
-    printf("ThreadIRCSeed started\n");
+    printf("ThreadIRCSeed trying to connect...\n");
+
     int nErrorWait = 10;
     int nRetryWait = 10;
     int nNameRetry = 0;
 
     while (!fShutdown)
     {
-        CService addrConnect("92.243.23.21", 6667); // irc.lfnet.org
+        const uint16_t nIrcPort = 6667;
+        CService addrConnect("92.243.23.21", nIrcPort); // irc.lfnet.org
 
-        CService addrIRC("irc.lfnet.org", 6667, true);
+        CService addrIRC("irc.lfnet.org", nIrcPort, true);
         if (addrIRC.IsValid())
             addrConnect = addrIRC;
 
@@ -260,7 +265,7 @@ void ThreadIRCSeed2(void* parg)
         if (!fNoListen && GetLocal(addrLocal, &addrIPv4) && nNameRetry<3)
             strMyName = EncodeAddress(GetLocalAddress(&addrConnect));
         if (strMyName == "")
-            strMyName = strprintf("x%"PRI64u"", GetRand(1000000000));
+            strMyName = strprintf("x%" PRIu64 "", GetRand(1000000000));
 
         Send(hSocket, strprintf("NICK %s\r", strMyName.c_str()).c_str());
         Send(hSocket, strprintf("USER %s 8 * : %s\r", strMyName.c_str(), strMyName.c_str()).c_str());
@@ -314,7 +319,7 @@ void ThreadIRCSeed2(void* parg)
             Send(hSocket, strprintf("WHO #TagCoin%02d\r", channel_number).c_str());
         }
 
-        int64 nStart = GetTime();
+        int64_t nStart = GetTime();
         string strLine;
         strLine.reserve(10000);
         while (!fShutdown && RecvLineIRC(hSocket, strLine))
@@ -327,30 +332,27 @@ void ThreadIRCSeed2(void* parg)
             if (vWords.size() < 2)
                 continue;
 
-            char pszName[10000];
-            pszName[0] = '\0';
+            std::string strName;
 
             if (vWords[1] == "352" && vWords.size() >= 8)
             {
                 // index 7 is limited to 16 characters
                 // could get full length name at index 10, but would be different from join messages
-                strlcpy(pszName, vWords[7].c_str(), sizeof(pszName));
+                strName = vWords[7].c_str();
                 printf("IRC got who\n");
             }
 
             if (vWords[1] == "JOIN" && vWords[0].size() > 1)
             {
                 // :username!username@50000007.F000000B.90000002.IP JOIN :#channelname
-                strlcpy(pszName, vWords[0].c_str() + 1, sizeof(pszName));
-                if (strchr(pszName, '!'))
-                    *strchr(pszName, '!') = '\0';
+                strName = vWords[0].substr(1, vWords[0].find('!', 1) - 1);
                 printf("IRC got join\n");
             }
 
-            if (pszName[0] == 'u')
+            if (boost::algorithm::starts_with(strName, "u"))
             {
                 CAddress addr;
-                if (DecodeAddress(pszName, addr))
+                if (DecodeAddress(strName, addr))
                 {
                     addr.nTime = GetAdjustedTime();
                     if (addrman.Add(addr, addrConnect, 51 * 60))

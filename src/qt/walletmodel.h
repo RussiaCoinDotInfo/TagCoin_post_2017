@@ -2,13 +2,22 @@
 #define WALLETMODEL_H
 
 #include <QObject>
+#include <vector>
+#include <map>
 
 #include "allocators.h" /* for SecureString */
 
 class OptionsModel;
 class AddressTableModel;
 class TransactionTableModel;
+class MintingTableModel;
 class CWallet;
+class CKeyID;
+class CPubKey;
+class COutput;
+class COutPoint;
+class uint256;
+class CCoinControl;
 
 QT_BEGIN_NAMESPACE
 class QTimer;
@@ -53,9 +62,12 @@ public:
 
     OptionsModel *getOptionsModel();
     AddressTableModel *getAddressTableModel();
+    MintingTableModel *getMintingTableModel();
     TransactionTableModel *getTransactionTableModel();
 
+    bool haveWatchOnly() const;
     qint64 getBalance() const;
+    qint64 getBalanceWatchOnly() const;
     qint64 getStake() const;
     qint64 getUnconfirmedBalance() const;
     qint64 getImmatureBalance() const;
@@ -68,7 +80,7 @@ public:
     // Return status record for SendCoins, contains error id + information
     struct SendCoinsReturn
     {
-        SendCoinsReturn(StatusCode status,
+        SendCoinsReturn(StatusCode status=Aborted,
                          qint64 fee=0,
                          QString hex=QString()):
             status(status), fee(fee), hex(hex) {}
@@ -78,7 +90,7 @@ public:
     };
 
     // Send coins to a list of recipients
-    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients);
+    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients, const CCoinControl *coinControl=NULL);
 
     // Wallet encryption
     bool setWalletEncrypted(bool encrypted, const SecureString &passphrase);
@@ -88,11 +100,16 @@ public:
     // Wallet backup
     bool backupWallet(const QString &filename);
 
+    bool dumpWallet(const QString &filename);
+    bool importWallet(const QString &filename);
+
+    void getStakeWeightFromValue(const int64_t& nTime, const int64_t& nValue, uint64_t& nWeight);
+
     // RAI object for unlocking wallet, returned by requestUnlock()
     class UnlockContext
     {
     public:
-        UnlockContext(WalletModel *wallet, bool valid, bool relock);
+        UnlockContext(WalletModel *wallet, bool valid, bool relock, bool mintflag);
         ~UnlockContext();
 
         bool isValid() const { return valid; }
@@ -104,20 +121,33 @@ public:
         WalletModel *wallet;
         bool valid;
         mutable bool relock; // mutable, as it can be set to false by copying
+        bool mintflag;
 
         void CopyFrom(const UnlockContext& rhs);
     };
 
     UnlockContext requestUnlock();
 
+    bool getPubKey(const CKeyID &address, CPubKey& vchPubKeyOut) const;
+    void getOutputs(const std::vector<COutPoint>& vOutpoints, std::vector<COutput>& vOutputs);
+    void listCoins(std::map<QString, std::vector<COutput> >& mapCoins) const;
+    bool isLockedCoin(uint256 hash, unsigned int n) const;
+    void lockCoin(COutPoint& output);
+    void unlockCoin(COutPoint& output);
+    void listLockedCoins(std::vector<COutPoint>& vOutpts);
+    void clearOrphans();
+    CWallet* getWallet();
+
 private:
     CWallet *wallet;
+    bool fHaveWatchOnly;
 
     // Wallet has an options model for wallet-specific options
     // (transaction fee, for example)
     OptionsModel *optionsModel;
 
     AddressTableModel *addressTableModel;
+    MintingTableModel *mintingTableModel;
     TransactionTableModel *transactionTableModel;
 
     // Cache some values to be able to detect changes
@@ -135,7 +165,6 @@ private:
     void unsubscribeFromCoreSignals();
     void checkBalanceChanged();
 
-
 public slots:
     /* Wallet status might have changed */
     void updateStatus();
@@ -143,12 +172,14 @@ public slots:
     void updateTransaction(const QString &hash, int status);
     /* New, updated or removed address book entry */
     void updateAddressBook(const QString &address, const QString &label, bool isMine, int status);
+    /* Watchonly added */
+    void updateWatchOnlyFlag(bool fHaveWatchonly);
     /* Current, immature or unconfirmed balance might have changed - emit 'balanceChanged' if so */
     void pollBalanceChanged();
 
 signals:
     // Signal that balance in wallet changed
-    void balanceChanged(qint64 balance, qint64 stake, qint64 unconfirmedBalance, qint64 immatureBalance);
+    void balanceChanged(qint64 total, qint64 watchOnly, qint64 stake, qint64 unconfirmedBalance, qint64 immatureBalance);
 
     // Number of transactions in wallet changed
     void numTransactionsChanged(int count);
@@ -163,6 +194,9 @@ signals:
 
     // Asynchronous error notification
     void error(const QString &title, const QString &message, bool modal);
+
+    // Watch-only address added
+    void notifyWatchonlyChanged(bool fHaveWatchonly);
 };
 
 

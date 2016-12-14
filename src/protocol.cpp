@@ -23,7 +23,7 @@ CMessageHeader::CMessageHeader()
     memcpy(pchMessageStart, ::pchMessageStart, sizeof(pchMessageStart));
     memset(pchCommand, 0, sizeof(pchCommand));
     pchCommand[1] = 1;
-    nMessageSize = -1;
+    nMessageSize = std::numeric_limits<uint32_t>::max();
     nChecksum = 0;
 }
 
@@ -80,7 +80,7 @@ CAddress::CAddress() : CService()
     Init();
 }
 
-CAddress::CAddress(CService ipIn, uint64 nServicesIn) : CService(ipIn)
+CAddress::CAddress(CService ipIn, uint64_t nServicesIn) : CService(ipIn)
 {
     Init();
     nServices = nServicesIn;
