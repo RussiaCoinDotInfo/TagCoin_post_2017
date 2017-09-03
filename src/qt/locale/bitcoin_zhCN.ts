@@ -6,12 +6,12 @@
     <message>
         <location filename="../forms/aboutdialog.ui" line="14"/>
         <source>About TagCoin</source>
-        <translation>关于万众币</translation>
+        <translation>关于奖赏币</translation>
     </message>
     <message>
         <location filename="../forms/aboutdialog.ui" line="56"/>
         <source>&lt;b&gt;TagCoin&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;万众币&lt;/b&gt; 版本</translation>
+        <translation>&lt;b&gt;奖赏币&lt;/b&gt; 版本</translation>
     </message>
     <message>
         <location filename="../forms/aboutdialog.ui" line="97"/>
@@ -24,7 +24,7 @@ Copyright © 2012-2015 The TagCoin developers</source>
 Copyright © 2011-2012 The PPCoin Developers
 Copyright © 2014 The Peerunity Developers
 Copyright © 2014 The EmerCoin Developers
-Copyright © 2012-2016 万众币开发团队</translation>
+Copyright © 2012-2017 奖赏币开发团队</translation>
     </message>
     <message>
         <location filename="../forms/aboutdialog.ui" line="114"/>
@@ -46,7 +46,7 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../forms/addressbookpage.ui" line="20"/>
         <source>These are your TagCoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>下面是你用来接收万众币的地址，你可以创建多个地址用于不同的地方。</translation>
+        <translation>下面是你用来接收奖赏币的地址，你可以创建多个地址用于不同的地方。</translation>
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="36"/>
@@ -91,7 +91,7 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../forms/addressbookpage.ui" line="116"/>
         <source>Verify a message to ensure it was signed with a specified TagCoin address</source>
-        <translation>验证信息以确保它是一个指定的万众币地址</translation>
+        <translation>验证信息以确保它是一个指定的奖赏币地址</translation>
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="119"/>
@@ -227,7 +227,7 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="105"/>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
-        <translation>Warning: 如果你忘记了你的密码，你将 &lt;b&gt;失去所有的万众币！&lt;/b&gt;!</translation>
+        <translation>Warning: 如果你忘记了你的密码，你将 &lt;b&gt;失去所有的奖赏币！&lt;/b&gt;!</translation>
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="105"/>
@@ -243,7 +243,7 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="116"/>
         <source>TagCoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>万众币将关闭现在完成加密过程。请您谨记：钱包加密并不是万能的，电脑中毒，您的万众币还是有可能丢失。</translation>
+        <translation>奖赏币将关闭现在完成加密过程。请您谨记：钱包加密并不是万能的，电脑中毒，您的奖赏币还是有可能丢失。</translation>
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="120"/>
@@ -296,7 +296,7 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="178"/>
         <source>TagCoin will close now to finish the decryption process. </source>
-        <translation>万众币将关闭进程完成加密过程。 </translation>
+        <translation>奖赏币将关闭进程完成加密过程。 </translation>
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="189"/>
@@ -315,13 +315,13 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../bitcoin.cpp" line="146"/>
         <source>A fatal error occurred. TagCoin can no longer continue safely and will quit.</source>
-        <translation>错误！万众币将关闭。</translation>
+        <translation>错误！奖赏币将关闭。</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="96"/>
         <location filename="../bitcoingui.cpp" line="736"/>
         <source>TagCoin</source>
-        <translation>万众币</translation>
+        <translation>奖赏币</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="96"/>
@@ -341,17 +341,17 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../bitcoingui.cpp" line="250"/>
         <source>&amp;Send coins</source>
-        <translation>&amp;发送万众币</translation>
+        <translation>&amp;发送奖赏币</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="251"/>
         <source>Send coins to a TagCoin address</source>
-        <translation>将货币发送到一个万众币地址</translation>
+        <translation>将货币发送到一个奖赏币地址</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="256"/>
         <source>&amp;Receive coins</source>
-        <translation>&amp;接收万众币</translation>
+        <translation>&amp;接收奖赏币</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="257"/>
@@ -411,12 +411,12 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../bitcoingui.cpp" line="303"/>
         <source>&amp;About TagCoin</source>
-        <translation>&amp;关于万众币</translation>
+        <translation>&amp;关于奖赏币</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="304"/>
         <source>Show information about TagCoin</source>
-        <translation>显示万众币信息</translation>
+        <translation>显示奖赏币信息</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="307"/>
@@ -437,7 +437,7 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../bitcoingui.cpp" line="314"/>
         <source>Modify configuration options for TagCoin</source>
-        <translation>万众币修改设置</translation>
+        <translation>修改奖赏币设置</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="316"/>
@@ -512,7 +512,7 @@ Copyright © 2012-2016 万众币开发团队</translation>
     <message>
         <location filename="../bitcoingui.cpp" line="331"/>
         <source>Verify messages to ensure they were signed with specified TagCoin addresses</source>
-        <translation>验证消息，确保他们是你签名的万众币地址。</translation>
+        <translation>验证消息，确保他们是你签名的奖赏币地址。</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="332"/>
@@ -614,14 +614,14 @@ Copyright © 2012-2016 万众币开发团队</translation>
         <location filename="../bitcoingui.cpp" line="445"/>
         <location filename="../bitcoingui.cpp" line="513"/>
         <source>TagCoin client</source>
-        <translation>万众币客户端</translation>
+        <translation>奖赏币客户端</translation>
     </message>
     <message numerus="yes">
         <location filename="../bitcoingui.cpp" line="586"/>
         <source>%n active connection(s) to TagCoin network</source>
         <translation>
-            <numerusform>%n 个到万众币网络的活动链接</numerusform>
-            <numerusform>%n 个到万众币网络的活动链接</numerusform>
+            <numerusform>%n 个到奖赏币网络的活动链接</numerusform>
+            <numerusform>%n 个到奖赏币网络的活动链接</numerusform>
         </translation>
     </message>
     <message>
@@ -1234,7 +1234,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../editaddressdialog.cpp" line="103"/>
         <source>The entered address &quot;%1&quot; is not a valid TagCoin address.</source>
-        <translation>输入的地址 &quot;%1&quot; 不是有效的万众币地址。</translation>
+        <translation>输入的地址 &quot;%1&quot; 不是有效的奖赏币地址。</translation>
     </message>
     <message>
         <location filename="../editaddressdialog.cpp" line="108"/>
@@ -1286,7 +1286,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location filename="../guiutil.cpp" line="476"/>
         <location filename="../guiutil.cpp" line="488"/>
         <source>TagCoin-Qt</source>
-        <translation>万众币-Qt</translation>
+        <translation>奖赏币-Qt</translation>
     </message>
     <message>
         <location filename="../guiutil.cpp" line="476"/>
@@ -1334,17 +1334,17 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../forms/intro.ui" line="23"/>
         <source>Welcome to TagCoin-qt.</source>
-        <translation type="unfinished">欢迎来到万众币。</translation>
+        <translation type="unfinished">欢迎来到奖赏币。</translation>
     </message>
     <message>
         <location filename="../forms/intro.ui" line="49"/>
         <source>As this is the first time the program is launched, you can choose where TagCoin-qt will store its data.</source>
-        <translation type="unfinished">如果这是该程序第一次启动，您可以选择万众币储存数据的位置。</translation>
+        <translation type="unfinished">如果这是该程序第一次启动，您可以选择奖赏币储存数据的位置。</translation>
     </message>
     <message>
         <location filename="../forms/intro.ui" line="59"/>
         <source>TagCoin-qt will download and store a copy of the TagCoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation type="unfinished">万众币将会下载并保存万众币区块链。至少%1GB 的数据将会储存在此目录中，并且数据会随时间而增加。钱包也会保存在此目录中。</translation>
+        <translation type="unfinished">奖赏币将会下载并保存奖赏币区块链。至少%1GB 的数据将会储存在此目录中，并且数据会随时间而增加。钱包也会保存在此目录中。</translation>
     </message>
     <message>
         <location filename="../forms/intro.ui" line="69"/>
@@ -1359,7 +1359,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../intro.cpp" line="184"/>
         <source>TagCoin-qt</source>
-        <translation type="unfinished">万众币</translation>
+        <translation type="unfinished">奖赏币</translation>
     </message>
     <message>
         <location filename="../intro.cpp" line="185"/>
@@ -1980,12 +1980,12 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/optionsdialog.ui" line="86"/>
         <source>Automatically start TagCoin after logging in to the system.</source>
-        <translation>登陆系统后自动运行万众币。</translation>
+        <translation>登陆系统后自动运行奖赏币。</translation>
     </message>
     <message>
         <location filename="../forms/optionsdialog.ui" line="89"/>
         <source>&amp;Start TagCoin on system login</source>
-        <translation>&amp;系统登陆时启动万众币</translation>
+        <translation>&amp;系统登陆时启动奖赏币</translation>
     </message>
     <message>
         <location filename="../forms/optionsdialog.ui" line="96"/>
@@ -2005,7 +2005,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/optionsdialog.ui" line="136"/>
         <source>Connect to the TagCoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>通过代理连接万众币网络 (例如 通过TOr连接)。</translation>
+        <translation>通过代理连接奖赏币网络 (例如 通过TOr连接)。</translation>
     </message>
     <message>
         <location filename="../forms/optionsdialog.ui" line="139"/>
@@ -2105,7 +2105,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/optionsdialog.ui" line="414"/>
         <source>The user interface language can be set here. This setting will take effect after restarting TagCoin.</source>
-        <translation>在此可以设置用户界面语言。当重启万众币时此设置生效。</translation>
+        <translation>在此可以设置用户界面语言。当重启奖赏币时此设置生效。</translation>
     </message>
     <message>
         <location filename="../forms/optionsdialog.ui" line="425"/>
@@ -2120,7 +2120,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/optionsdialog.ui" line="447"/>
         <source>Whether to show TagCoin addresses in the transaction list or not.</source>
-        <translation>是否在交易列表中显示万众币地址。</translation>
+        <translation>是否在交易列表中显示奖赏币地址。</translation>
     </message>
     <message>
         <location filename="../forms/optionsdialog.ui" line="450"/>
@@ -2182,7 +2182,7 @@ Reduce the number of addresses involved in the address creation.</source>
         <location filename="../optionsdialog.cpp" line="258"/>
         <location filename="../optionsdialog.cpp" line="267"/>
         <source>This setting will take effect after restarting TagCoin.</source>
-        <translation>当重启万众币后此设置生效。</translation>
+        <translation>当重启奖赏币后此设置生效。</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="297"/>
@@ -2206,7 +2206,7 @@ Reduce the number of addresses involved in the address creation.</source>
         <location filename="../forms/overviewpage.ui" line="46"/>
         <location filename="../forms/overviewpage.ui" line="365"/>
         <source>The displayed information may be out of date. Your wallet automatically synchronizes with the TagCoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>显示的信息可能已过期。当连接建立后您的钱包将自动同步至万众币，但此过程尚未完成。</translation>
+        <translation>显示的信息可能已过期。当连接建立后您的钱包将自动同步至奖赏币，但此过程尚未完成。</translation>
     </message>
     <message>
         <location filename="../forms/overviewpage.ui" line="225"/>
@@ -2307,17 +2307,17 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../bitcoinunits.cpp" line="48"/>
         <source>TagCoins</source>
-        <translation>万众币</translation>
+        <translation>奖赏币</translation>
     </message>
     <message>
         <location filename="../bitcoinunits.cpp" line="49"/>
         <source>Milli-TagCoins (1 / 1,000)</source>
-        <translation>毫万众币 (1 / 1,000)</translation>
+        <translation>毫奖赏币 (1 / 1,000)</translation>
     </message>
     <message>
         <location filename="../bitcoinunits.cpp" line="50"/>
         <source>Micro-TagCoins (1 / 1,000,000)</source>
-        <translation>微万众币 (1 / 1,000,000)</translation>
+        <translation>微奖赏币 (1 / 1,000,000)</translation>
     </message>
     <message>
         <location filename="../bitcoinunits.cpp" line="185"/>
@@ -2418,7 +2418,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/rpcconsole.ui" line="14"/>
         <source>TagCoin - Debug window</source>
-        <translation>万众币 - 调试窗口</translation>
+        <translation>奖赏币 - 调试窗口</translation>
     </message>
     <message>
         <location filename="../forms/rpcconsole.ui" line="24"/>
@@ -2458,7 +2458,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/rpcconsole.ui" line="95"/>
         <source>Open the TagCoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>从当前数据目录中打开万众币调试日志文件。对于大的日志文件来说打开需要一段时间。</translation>
+        <translation>从当前数据目录中打开奖赏币调试日志文件。对于大的日志文件来说打开需要一段时间。</translation>
     </message>
     <message>
         <location filename="../forms/rpcconsole.ui" line="98"/>
@@ -2473,7 +2473,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/rpcconsole.ui" line="147"/>
         <source>Show the TagCoin-Qt help message to get a list with possible TagCoin command-line options.</source>
-        <translation>显示万众币帮助获取可能的万众币命令行选项名单信息。</translation>
+        <translation>显示奖赏币帮助获取可能的奖赏币命令行选项名单信息。</translation>
     </message>
     <message>
         <location filename="../forms/rpcconsole.ui" line="150"/>
@@ -2538,7 +2538,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/rpcconsole.ui" line="383"/>
         <source>TagCoin Core</source>
-        <translation>万众币中心</translation>
+        <translation>奖赏币中心</translation>
     </message>
     <message>
         <location filename="../forms/rpcconsole.ui" line="406"/>
@@ -2548,7 +2548,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/rpcconsole.ui" line="426"/>
         <source>Open the TagCoin configuration file from the current data directory.</source>
-        <translation>从当前数据目录中打开万众币配置文件。</translation>
+        <translation>从当前数据目录中打开奖赏币配置文件。</translation>
     </message>
     <message>
         <location filename="../forms/rpcconsole.ui" line="429"/>
@@ -2593,7 +2593,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../rpcconsole.cpp" line="325"/>
         <source>Welcome to the TagCoin RPC console.</source>
-        <translation>欢迎来到万众币 RPC 控制台</translation>
+        <translation>欢迎来到奖赏币 RPC 控制台</translation>
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="326"/>
@@ -2722,7 +2722,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../secondauthdialog.cpp" line="29"/>
         <source>Enter a TagCoin address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation type="unfinished">输入一个万众币地址 (例如 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation type="unfinished">输入一个奖赏币地址 (例如 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location filename="../secondauthdialog.cpp" line="30"/>
@@ -2930,7 +2930,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="42"/>
         <source>Enter a TagCoin address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>输入一个万众币地址(例如 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation>输入一个奖赏币地址(例如 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="56"/>
@@ -3090,7 +3090,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../sendcoinsentry.cpp" line="26"/>
         <source>Enter a TagCoin address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>输入一个万众币地址(例如4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation>输入一个奖赏币地址(例如4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
 </context>
 <context>
@@ -3151,7 +3151,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="148"/>
         <source>Sign the message to prove you own this TagCoin address</source>
-        <translation>签名地址以证明您拥有此万众币地址</translation>
+        <translation>签名地址以证明您拥有此奖赏币地址</translation>
     </message>
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="165"/>
@@ -3183,7 +3183,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="294"/>
         <source>Verify the message to ensure it was signed with the specified TagCoin address</source>
-        <translation>验证信息以确保它已与指定的万众币地址签名</translation>
+        <translation>验证信息以确保它已与指定的奖赏币地址签名</translation>
     </message>
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="311"/>
@@ -3194,7 +3194,7 @@ Reduce the number of addresses involved in the address creation.</source>
         <location filename="../signverifymessagedialog.cpp" line="29"/>
         <location filename="../signverifymessagedialog.cpp" line="32"/>
         <source>Enter a TagCoin address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>输入一个万众币地址(例如 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation>输入一个奖赏币地址(例如 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="30"/>
@@ -3204,7 +3204,7 @@ Reduce the number of addresses involved in the address creation.</source>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="33"/>
         <source>Enter TagCoin signature</source>
-        <translation>输入万众币签名</translation>
+        <translation>输入奖赏币签名</translation>
     </message>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="115"/>
@@ -3797,7 +3797,7 @@ If the file does not exist, create it with owner-readable-only file permissions.
         <translation>%s, 您必须在配置文件中设置一个rpc密码:
  %s
 推荐您使用下列随机密码:
-rpc用户=万众币rpc
+rpc用户=TagCoinrpc
 rpc密码=%s
 (您不需要记住这组密码)
 如果文件不存在, 用只有所有人可读文件权限创建一个文件。</translation>
@@ -3820,7 +3820,7 @@ rpc密码=%s
     <message>
         <location filename="../bitcoinstrings.cpp" line="26"/>
         <source>Cannot obtain a lock on data directory %s.  TagCoin is probably already running.</source>
-        <translation>不能获得一个数据文件锁 %s.  万众币可能已经运行。</translation>
+        <translation>不能获得一个数据文件锁 %s.  奖赏币可能已经运行。</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="29"/>
@@ -3870,7 +3870,7 @@ rpc密码=%s
     <message>
         <location filename="../bitcoinstrings.cpp" line="54"/>
         <source>Unable to bind to %s on this computer. TagCoin is probably already running.</source>
-        <translation>不能绑定 %s 在此电脑上。万众币可能已经运行。</translation>
+        <translation>不能绑定 %s 在此电脑上。奖赏币可能已经运行。</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="56"/>
@@ -3880,7 +3880,7 @@ rpc密码=%s
     <message>
         <location filename="../bitcoinstrings.cpp" line="59"/>
         <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong TagCoin will not work properly.</source>
-        <translation>警告: 请检查您电脑的&apos;s 日期和时间正确! 如果您的时钟错误，万众币将不能正常运行。</translation>
+        <translation>警告: 请检查您电脑的&apos;s 日期和时间正确! 如果您的时钟错误，奖赏币将不能正常运行。</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="62"/>
@@ -4009,7 +4009,7 @@ If the file does not exist, create it with owner-readable-only file permissions.
     <message>
         <location filename="../bitcoinstrings.cpp" line="95"/>
         <source>Error loading wallet.dat: Wallet requires newer version of TagCoin</source>
-        <translation>错误下载钱包数据文件: 钱包需要更新版本的万众币</translation>
+        <translation>错误下载钱包数据文件: 钱包需要更新版本的奖赏币</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="96"/>
@@ -4154,12 +4154,12 @@ If the file does not exist, create it with owner-readable-only file permissions.
     <message>
         <location filename="../bitcoinstrings.cpp" line="124"/>
         <source>TagCoin version</source>
-        <translation>万众币版本</translation>
+        <translation>奖赏币版本</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="125"/>
         <source>TagCoin</source>
-        <translation>万众币</translation>
+        <translation>奖赏币</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="126"/>
@@ -4219,7 +4219,7 @@ If the file does not exist, create it with owner-readable-only file permissions.
     <message>
         <location filename="../bitcoinstrings.cpp" line="137"/>
         <source>Send command to -server or TagCoind</source>
-        <translation>发送命令给 -服务器或万众币</translation>
+        <translation>发送命令给 -服务器或奖赏币</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="138"/>
@@ -4379,7 +4379,7 @@ If the file does not exist, create it with owner-readable-only file permissions.
     <message>
         <location filename="../bitcoinstrings.cpp" line="171"/>
         <source>Wallet needed to be rewritten: restart TagCoin to complete</source>
-        <translation>钱包需要被重写: 重启万众币来完成</translation>
+        <translation>钱包需要被重写: 重启奖赏币来完成</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="172"/>
